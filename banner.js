@@ -27,9 +27,11 @@ var $banner=(function(){
         $right=$ban.find('#right'),
         $navs=$ban.find('#navs'),
         $span=$ban.find('span'),
-        index = 0;
-
+        index = 0,
+        timer;
     $navs.find('li').eq(0).addClass('active');
+
+    timer = setInterval(rightClick, 3000);
     function navActive(){
         $navs.children().removeClass('active');
         $(this).addClass('active');
@@ -37,16 +39,14 @@ var $banner=(function(){
         $slider.animate({left:-index*1200},'slow');
     }
     function spanHover(){
-        $span.css('opacity',0.5);
+        clearInterval(timer);
+        $span.animate({opacity:0.3},'slow')
     }
     function spanOut(){
-        setTimeout(()=>{
-            $span.animate({opacity:0.1},'slow')
-        },1000)
-
+        $span.animate({opacity:0},'slow')
+        timer = setInterval(rightClick, 3000);
     }
     function leftClick(){
-        $span.css('opacity',0.5);
         index--;
         $navs.children().removeClass('active');
         if(index <= 0){
@@ -60,13 +60,12 @@ var $banner=(function(){
         $navs.children().eq(index-1).addClass('active');
     }
     function rightClick(){
-        $span.css('opacity',0.5);
         index++;
         $navs.children().removeClass('active');
         if(index >= 6){
             index = 1;
             $slider.animate({left:-6*1200},'slow',()=>{
-                $slider.css('left',-1*1200);
+                $slider.css('left',-1200);
             });
             
         }
@@ -77,8 +76,8 @@ var $banner=(function(){
     function show(){
         $('#box').append($ban.children());
         $navs.children().bind('click',navActive);
-        $span.hover(spanHover);
-        $span.mouseout(spanOut);
+        $('#box').mouseenter(spanHover);
+        $('#box').mouseleave(spanOut);
         $left.click(leftClick);
         $right.click(rightClick);
     }

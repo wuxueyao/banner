@@ -42,7 +42,7 @@ ul,li{
 	font-size: 30px;
 	position: absolute;
 	/* display: none; */
-	opacity: 0.1;
+	opacity: 0;
 }
 #left{
 	left: 30px;
